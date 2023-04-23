@@ -13,8 +13,11 @@ param (
 
 )
 
-#current user desktop log file
-$log = $env:USERPROFILE + "\Desktop\BTC-Price.log"
+#Log file path current directory. Create if doesnt exist
+$log = (Get-Location).Path + '\btc-email-alerts.log'
+if (!(Test-Path $log)) {
+    New-Item -Path $log -ItemType File | Out-Null
+}
 
 #check price every 1 minutes and send email if price is over $alert and log price
 while ($true) {
